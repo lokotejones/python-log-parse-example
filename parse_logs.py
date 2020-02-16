@@ -1,8 +1,15 @@
 import os
+from os import path
 import re
 
 # Regex used to match relevant loglines (in this case, a specific IP address)
 line_regex = re.compile(r".*fwd=\"12.34.56.78\".*$")
+
+# JN - Check if "output" directory exists.
+
+if not (path.exists("./output")):
+    os.mkdir("./output")
+    print ("Created output directory.")
 
 # Output file, where the matched loglines will be copied to
 output_filename = os.path.normpath("output/parsed_lines.log")
@@ -18,5 +25,5 @@ with open(output_filename, "a") as out_file:
         for line in in_file:
             # If log line matches our regex, print to console, and output file
             if (line_regex.search(line)):
-                print line
+                print (line)
                 out_file.write(line)
